@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const Option = require("./models/Option")
 
 const app = express();
 const PORT = 3000;
@@ -29,4 +30,20 @@ console.log(`Server läuft auf http://localhost:${PORT}`);
 })
 .catch((error) => {
 console.error("MongoDB Verbindung fehlgeschlagen:", error);
+});
+
+
+
+
+app.post("/api/options", async (req, res) => {
+try {
+const option = new Option(req.body);
+const savedOption = await option.save();
+
+res.status(201).json(savedOption);
+} catch (error) {
+res.status(400).json({
+message: "Option konnte nicht gespeichert werden."
+});
+}
 });
