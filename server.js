@@ -50,3 +50,17 @@ message: "Option konnte nicht gespeichert werden."
 
 
 
+app.get("/api/options", async (req, res) => {
+try {
+const options = await Option.find();
+
+res.json(options);
+} catch (error) {
+res.status(500).json({
+message: "Optionen konnten nicht geladen werden."
+});
+}
+});
+
+
+
