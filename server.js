@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const Option = require("./models/Option")
+const Category = require("./models/Category")
 
 const app = express();
 const PORT = 3000;
@@ -61,6 +62,35 @@ message: "Optionen konnten nicht geladen werden."
 });
 }
 });
+
+
+
+app.put("/api/options/:id", async (req, res) => {
+try {
+const option = await Option.findByIdAndUpdate(
+req.params.id,
+req.body,
+{ new: true, runValidators: true }
+);
+
+if (!option) {
+return res.status(404).json({
+message: "Option nicht gefunden."
+});
+}
+
+res.json(option);
+} catch (error) {
+res.status(400).json({
+message: "Option konnte nicht geändert werden."
+});
+}
+});
+
+
+
+
+
 
 
 

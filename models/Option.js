@@ -11,7 +11,7 @@ required: true
 },
 emoji: {
 type: String,
-required: true
+
 }
 });
 
