@@ -90,6 +90,29 @@ message: "Option konnte nicht geändert werden."
 
 
 
+app.delete("/api/options/:id", async (req, res) => {
+try {
+const option = await Option.findByIdAndDelete(req.params.id);
+
+if (!option) {
+return res.status(404).json({
+message: "Option nicht gefunden."
+});
+}
+
+res.json({
+message: "Option wurde gelöscht."
+});
+} catch (error) {
+res.status(400).json({
+message: "Option konnte nicht gelöscht werden."
+});
+}
+});
+
+
+
+
 
 
 
