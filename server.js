@@ -112,6 +112,37 @@ message: "Option konnte nicht gelöscht werden."
 
 
 
+app.get("/api/options/random", async (req, res) => {
+try {
+const category = req.query.category;
+
+let options;
+
+if (category) {
+options = await Option.find({ category: category });
+} else {
+options = await Option.find();
+}
+
+if (options.length === 0) {
+return res.status(404).json({
+message: "Keine Optionen vorhanden."
+});
+}
+
+const randomIndex = Math.floor(Math.random() * options.length);
+const randomOption = options[randomIndex];
+
+res.json(randomOption);
+
+} catch (error) {
+res.status(500).json({
+message: "Zufällige Option konnte nicht ausgewählt werden."
+});
+}
+});
+
+
 
 
 
