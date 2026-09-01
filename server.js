@@ -148,3 +148,30 @@ message: "Zufällige Option konnte nicht ausgewählt werden."
 
 
 
+// ========================================
+// CATEGORIES
+// ========================================
+
+
+
+// GET - Alle Kategorien
+app.get("/api/categories", async (req, res) => {
+try {
+const categories = await Category.find().sort({ name: 1 });
+
+res.json(categories);
+} catch (error) {
+res.status(500).json({
+message: "Kategorien konnten nicht geladen werden."
+});
+}
+});
+
+
+
+
+
+
+
+
+
