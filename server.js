@@ -169,6 +169,34 @@ message: "Kategorien konnten nicht geladen werden."
 
 
 
+// POST - Kategorie erstellen
+app.post("/api/categories", async (req, res) => {
+try {
+
+if (!req.body.name || !req.body.name.trim()) {
+return res.status(400).json({
+message: "Kategoriename fehlt."
+});
+}
+
+const category = new Category({
+name: req.body.name.trim()
+});
+
+const savedCategory = await category.save();
+
+res.status(201).json(savedCategory);
+
+} catch (error) {
+
+res.status(400).json({
+message: "Kategorie konnte nicht erstellt werden."
+});
+
+}
+});
+
+
 
 
 
