@@ -236,7 +236,32 @@ message: "Kategorie konnte nicht geändert werden."
 });
 
 
+// DELETE - Kategorie löschen
+app.delete("/api/categories/:id", async (req, res) => {
+try {
 
+const category = await Category.findByIdAndDelete(
+req.params.id
+);
+
+if (!category) {
+return res.status(404).json({
+message: "Kategorie nicht gefunden."
+});
+}
+
+res.json({
+message: "Kategorie wurde gelöscht."
+});
+
+} catch (error) {
+
+res.status(400).json({
+message: "Kategorie konnte nicht gelöscht werden."
+});
+
+}
+});
 
 
 
