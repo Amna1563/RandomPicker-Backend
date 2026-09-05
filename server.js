@@ -197,6 +197,45 @@ message: "Kategorie konnte nicht erstellt werden."
 });
 
 
+// PUT - Kategorie bearbeiten
+app.put("/api/categories/:id", async (req, res) => {
+try {
+
+if (!req.body.name || !req.body.name.trim()) {
+return res.status(400).json({
+message: "Kategoriename fehlt."
+});
+}
+
+const category = await Category.findByIdAndUpdate(
+req.params.id,
+{
+name: req.body.name.trim()
+},
+{
+new: true,
+runValidators: true
+}
+);
+
+if (!category) {
+return res.status(404).json({
+message: "Kategorie nicht gefunden."
+});
+}
+
+res.json(category);
+
+} catch (error) {
+
+res.status(400).json({
+message: "Kategorie konnte nicht geändert werden."
+});
+
+}
+});
+
+
 
 
 
